@@ -1,0 +1,17 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+nav {
+  background-color: gray;
+  height: 10vh;
+}
+footer {
+  background-color: gray;
+  height: 10vh;
+}
+.nav__link {
+  color: black;
+}
