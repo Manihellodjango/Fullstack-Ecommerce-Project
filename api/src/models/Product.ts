@@ -1,53 +1,56 @@
-import mongoose, { Document } from 'mongoose'
+import { Schema, model } from "mongoose";
 
-export type ProductDocument = Document & {
-  id: number
-  name: string
-  description: string
-  brand: string
-  price: number
-  category: string
-  image: string
-  rating: number
-}
+const productSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "name is required"],
+      minlength: 3,
+      maxlength: 150,
+      trim: true,
+    },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
+    description: {
+      type: String,
+      required: [true, "description is required"],
+      trim: true,
+      minlength: 3,
+      maxlength: 150,
+    },
+    price: {
+      type: Number,
+      trim: true,
+      required: [true, "price is required"],
+    },
+    quantity: {
+      type: Number,
+      required: [true, "quantity is required"],
+    },
+    sold: {
+      type: Number,
+      default: 0,
+    },
+    shipping: {
+      type: Boolean,
+    },
+    photo: {
+      data: Buffer,
+      contentType: String,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const productSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  brand: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  rating: {
-    type: Number,
-    min: 0,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date().toISOString(),
-  },
-})
-
-export default mongoose.model<ProductDocument>('Product', productSchema)
+const Product = model("Product", productSchema);
+export default Product;

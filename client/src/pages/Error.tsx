@@ -1,15 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Error = () => {
+  const navigate = useNavigate();
   return (
-    <div>
-      <h1>Error Page</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-        praesentium eaque voluptatum iure, earum quo odio soluta voluptates
-        cumque, suscipit facilis! Quisquam iusto saepe cupiditate nobis
-        repellendus repudiandae aliquid officiis?
-      </p>
+    <div className="center profile">
+      <h2>404 ! page not found</h2>
+      <button
+        className="btn"
+        onClick={() => {
+          navigate("/", { replace: true });
+        }}
+      >
+        {" "}
+        Go to home Page
+      </button>
     </div>
   );
 };

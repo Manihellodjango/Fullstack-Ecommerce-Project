@@ -1,51 +1,37 @@
-import mongoose, { Document } from 'mongoose'
+import { Schema, model } from "mongoose";
 
-export interface UserDocument extends Document {
-  id: string
-  name: string
-  email: string
-  password: string
-  phone: string
-  isVerified: boolean
-  isAdmin: boolean
-  token: string
-}
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "name is required"],
+      minlength: 3,
+      maxlength: 30,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: [true, "email is required"],
+      unique: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, "password is required"],
+      minlength: 5,
+      maxlength: 90,
+    },
+    address: {
+      type: String,
+      trim: true,
+    },
+    isAdmin: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
 
-const userSchema = new mongoose.Schema({
-  id: {
-    type: String,
-  },
-  name: {
-    type: String,
-    required: [true, 'must provide name'],
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: [true, 'email can not be empty'],
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  isVerified: {
-    type: Number,
-    default: 0,
-  },
-  isAdmin: {
-    type: Number,
-    default: 0,
-  },
-  token: {
-    type: String,
-    default: '',
-  },
-})
-
-export default mongoose.model<UserDocument>('User', userSchema)
+const User = model("User", userSchema);
+export default User;
